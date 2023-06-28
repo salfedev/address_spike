@@ -1,0 +1,48 @@
+{% extends "layouts/main.html" %}
+
+{% block pageTitle %}
+  GOV.UK page template – {{ serviceName }} – GOV.UK Prototype Kit
+{% endblock %}
+
+{% block content %}
+  {% from "govuk/components/button/macro.njk" import govukButton %}
+  {% from "govuk/components/radios/macro.njk" import govukRadios %}
+
+  <div class="govuk-width-container">
+    {% set addressCount = 6 %}
+    {% set postCode = "WR1 1NL" %}
+    {% set addressLine = "1 Victoria Street" %}
+    {# {% set formattedAddresses = [
+      {value: "address-1", text: "1 Victoria Street, Worcester, WR1 1NL"}
+    ] %} #}
+        {# {% for i in range(1, addressCount) %}
+            {% set formattedAddresses = formattedAddresses + [ {
+                value: "address-" + i,
+                text: i + " " + addressLine + ", " + postCode
+            } ] %}
+        {% endfor %} #}
+    <p>{{ addressCount }} addresses found for <b>{{ postCode }}</b> and <b>{{ addressLine }}</b>. <a href="/index">Search again</a>
+    </p>
+
+    {{ govukRadios({
+      name: "select-an-address",
+      fieldset: {
+      legend: {
+      text: "Select an address",
+      isPageHeading: true,
+      classes: "govuk-fieldset__legend--l"
+      }
+      },
+      items: formattedAddresses
+      })
+    }}
+
+    {{ govukButton({
+      text: "Use this address"
+      }) }}
+    <p class="govuk-body govuk-!-margin-bottom-0">
+      <a href="#" class="govuk-link">Enter address manually</a>
+    </p>
+  </div>
+
+{% endblock %}
